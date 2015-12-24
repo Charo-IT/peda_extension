@@ -12,5 +12,5 @@ Works with Python 3 only.
 After installing peda,
 ```
 git clone https://github.com/Charo-IT/peda_extension.git ~/peda_extension
-echo "source ~/peda_extension/peda_extention.py" >> ~/.gdbinit
+echo "source ~/peda_extension/peda_extension.py" >> ~/.gdbinit
 ```
