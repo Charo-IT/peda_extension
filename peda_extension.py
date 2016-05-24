@@ -61,6 +61,41 @@ class PEDA_Override:
             return False
         return True
 
+    def getpid(self):
+        """
+        Get PID of the debugged process
+        Returns:
+            - pid (Int)
+        """
+
+        out = None
+        status = self.get_status()
+        if not status or status == "STOPPED":
+            return None
+
+        if self.is_target_remote(): # remote target
+            ctx = config.Option.get("context")
+            config.Option.set("context", None)
+            try:
+                out = self.execute_redirect("call getpid()")
+            except:
+                pass
+
+            config.Option.set("context", ctx)
+
+            if out is None:
+                #return None
+                None
+            else:
+                out = self.execute_redirect("print $")
+                if out:
+                    return to_int(out.split("=")[1])
+                else:
+                    return None
+
+        pid = gdb.selected_inferior().pid
+        return int(pid) if pid else None
+
 # Add to PEDA
 for cmd in [c for c in dir(PEDACmd_Extend) if callable(getattr(PEDACmd_Extend, c)) and not c.startswith("_")]:
     pedacmd.commands.append(cmd)
