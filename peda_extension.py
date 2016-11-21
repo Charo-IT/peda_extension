@@ -73,6 +73,7 @@ class PEDA_Override:
         if not status or status == "STOPPED":
             return None
 
+        """
         if self.is_target_remote(): # remote target
             ctx = config.Option.get("context")
             config.Option.set("context", None)
@@ -84,14 +85,14 @@ class PEDA_Override:
             config.Option.set("context", ctx)
 
             if out is None:
-                #return None
-                None
+                return None
             else:
                 out = self.execute_redirect("print $")
                 if out:
                     return to_int(out.split("=")[1])
                 else:
                     return None
+        """
 
         pid = gdb.selected_inferior().pid
         return int(pid) if pid else None
