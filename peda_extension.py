@@ -97,6 +97,27 @@ class PEDA_Override:
         pid = gdb.selected_inferior().pid
         return int(pid) if pid else None
 
+    def read_string(self, address):
+        """
+        Read a string at an address
+
+        Args:
+            - address: address to read (Int)
+
+        Returns:
+            - memory content (raw bytes)
+        """
+        buf = b""
+        i = 0
+        while True:
+            c = self.readmem(address + i, 1)
+            if len(c) == 0 or c[0] == 0:
+                break
+            buf += c
+            i += 1
+
+        return buf
+
 # Add to PEDA
 for cmd in [c for c in dir(PEDACmd_Extend) if callable(getattr(PEDACmd_Extend, c)) and not c.startswith("_")]:
     pedacmd.commands.append(cmd)
