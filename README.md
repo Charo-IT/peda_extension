@@ -8,6 +8,8 @@ Works on Python 3 only.
 * Fixed an issue that PEDA fails to get pid while remote debugging.
 * Add command
     * `pdisasret` -- Do `pdisass` until "ret" or "hlt" appears. Useful for stripped binaries.
+* Add function
+    * `PEDA.read_string` -- Do `PEDA.readmem` until null-byte appears.
 
 ## Installation
 After installing PEDA,
